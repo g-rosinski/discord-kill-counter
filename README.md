@@ -35,7 +35,7 @@ Documentacion de Discord -> [acá](https://discord.com/developers/docs/getting-s
 
 ```
 git clone https://github.com/g-rosinski/discord-kill-counter.git
-cd discord-example-app
+cd discord-kill-counter
 npm install
 ```
 ### Credenciales

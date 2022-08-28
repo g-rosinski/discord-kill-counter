@@ -1,8 +1,8 @@
 # discord-kill-counter
 Bot de discord para contar muertes en juegos
 
-## Project structure
-Below is a basic overview of the project structure:
+## Estructura del proyecto Project
+Estructura básica del proyecto:
 
 ```
 ├── src    -> short, feature-specific sample apps
@@ -51,7 +51,7 @@ Cualquier cosa revisar el tutorial en la [documentación de Discord](https://dis
 Una vez seteado las variables de ambiente, estaría listo para iniciar la app:
 
 ```
-node run start
+npm run start
 ```
 
 ## Link utiles

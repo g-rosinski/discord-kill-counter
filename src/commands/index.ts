@@ -1,2 +1,2 @@
 export {default as ping} from './ping.js'
-export {default as add} from './add.js'
+export {default as agregar_juego} from './agregar_juego.js'

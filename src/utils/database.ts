@@ -13,12 +13,17 @@ export const connect = () => {
     database = Mongoose.connection
 
     database.once("open", async () => {
-        log.success("Connected to database");
+        log.success("Conectado a la base de datos");
     });  
 
     database.on("error", () => {
-        log.error("Error connecting to database");
+        log.error("Error al querer conectar a la base de datos");
     });
 }
 
-export const disconnect = () => !!database && Mongoose.disconnect();
+export const disconnect = () => {
+    if(database){
+        Mongoose.disconnect()
+        log.info("Base de datos desconectada");
+    }
+};

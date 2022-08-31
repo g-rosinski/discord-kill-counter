@@ -5,18 +5,20 @@ Bot de discord para contar muertes en juegos
 Estructura básica del proyecto:
 
 ```
-├── src    -> short, feature-specific sample apps
-│   ├── commands    -> slash command payloads
+├── src                 -> short, feature-specific sample apps
+│   ├── commands        -> slash command payloads
 │   ├   ├── index.ts    -> indice con los comandos disponibles
 │   ├   ├── ping.ts     -> ejemplo de comando
-│   ├── events      -> eventos del cliente de Discord
+│   ├── constants       -> archivos de contantes
+│   ├── events          -> eventos del cliente de Discord
 │   ├   ├── index.ts    -> indice con los eventos disponibles
-│   ├── handlers    -> manejadores de eventos y datos 
-│   ├── scripts
-│   ├── types       -> archivos de tipados e interfaces
-│   ├── utils       -> formatters + helpers
-│   ├── app.ts      -> logica principal de la app
-├── .env.sample -> sample .env file
+│   ├── handlers        -> manejadores de eventos y datos 
+│   ├── models          -> modelos de datos de la db 
+│   ├── scripts         -> funciones independientes de las instancia de la app
+│   ├── types           -> archivos de tipados e interfaces
+│   ├── utils           -> formatters + helpers
+│   ├── app.ts          -> logica principal de la app
+├── .env.sample         -> sample .env file
 ├── package.json
 ├── tsconfig.json
 ├── LICENSE

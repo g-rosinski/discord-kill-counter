@@ -23,6 +23,7 @@ const slashCommand = new SlashCommandBuilder()
 
 const run = async (interaction: Interaction) =>  {
     if(interaction.isChatInputCommand()){
+        await interaction.deferReply()
         const strmaps = interaction.options.getString('mapas')
         const maps = strmaps!.split(',')
                     .map(map => map.trim())
@@ -34,18 +35,12 @@ const run = async (interaction: Interaction) =>  {
             guildID: interaction.guild?.id!
         }
         try{
-            interaction.deferReply()
-            connect()
-            const response = await GameModel.create(game)
-            console.debug(response)
+            await GameModel.create(game)
             log.success(`Se agrego el juego ${game.gameTitle} al guild ${game.guildID}`)
             await interaction.editReply(`Se agrego el juego: ${game.gameTitle} a ${game.guildID}`)
         }catch(error){
             const msg = error instanceof Error && error.message 
             log.error(msg || `Error al agregar un juego ${game.gameTitle} al guild ${game.guildID}`)
-        }finally{
-            disconnect()
-
         }
     }
 }

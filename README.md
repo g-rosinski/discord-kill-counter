@@ -56,6 +56,14 @@ Una vez seteado las variables de ambiente, estaría listo para iniciar la app:
 npm run start
 ```
 
+### Desarrollo
+
+Para trabajar en el desarrollo del bot:
+
+```
+npm run dev
+```
+
 ## Link utiles
 - **[Documentación](https://discord.com/developers/docs/intro)**.
 - **[Servidor de desarrolladores de Discord](https://discord.gg/discord-developers)**.

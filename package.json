@@ -4,10 +4,11 @@
   "description": "Bot de Discord para contar muertes en juegos",
   "main": "/src/app.ts",
   "type": "module",
+  "module": "ES2015",
   "scripts": {
-    "dev": "ts-node-dev ./src/app.ts",
-    "publish": "node ./dist/scripts/publish-commands.js",
+    "dev": "cross-env NODE_OPTIONS=\"--no-warnings --loader ts-node/esm\" npx nodemon --watch",
     "build": "tsc -p tsconfig.json",
+    "publish": "node ./dist/scripts/publish-commands.js",
     "start": "npm run build && npm run publish && node ./dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,7 +28,10 @@
   },
   "devDependencies": {
     "@types/mongoose": "^5.11.97",
+    "cross-env": "^7.0.3",
     "mongoose": "^6.5.3",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.1.0"
   }

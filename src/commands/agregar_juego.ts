@@ -1,5 +1,4 @@
 import {  Interaction, SlashCommandBuilder } from 'discord.js'
-import { connect, disconnect } from '../utils/database.js'
 import log from '../utils/log.js'
 import { Game, GameModel } from '../models/game/index.js'
 

@@ -8,8 +8,10 @@
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=\"--no-warnings --loader ts-node/esm\" npx nodemon --watch",
     "build": "tsc -p tsconfig.json",
+    "build:watch": "tsc -p tsconfig.json --watch",
     "publish": "node ./dist/scripts/publish-commands.js",
-    "start": "npm run build && npm run publish && node ./dist/app.js",
+    "serve": "node ./dist/app.js",
+    "start": "npm run build && npm run publish && npm run serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Peredo Rosinski Gonzalo Matias",

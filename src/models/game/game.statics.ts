@@ -1,5 +1,5 @@
-import { connect, disconnect } from "../../utils/database.js"
-import log from "../../utils/log.js"
+import { connect, disconnect } from "@utils/database.js"
+import log from '@utils/log.js'
 import { Game, GameModel, GameDocument } from "./index.js"
 
 export const createGame = async (game:Game) => {

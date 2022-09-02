@@ -1,5 +1,5 @@
-import { connect, disconnect } from "utils/database"
-import log from "../../utils/log.js"
+// import { connect, disconnect } from "utils/database"
+// import log from "../../utils/log.js"
 
 
 // export async function setLastUpdated(this: GameDocument): Promise<void> {

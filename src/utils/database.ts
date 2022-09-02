@@ -1,4 +1,4 @@
-import { DB_CONNECTION } from "../constants/db.js";
+import { DB_CONNECTION } from "@constants/db.js";
 import Mongoose from "mongoose";
 import log from "./log.js";
 

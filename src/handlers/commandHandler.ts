@@ -1,4 +1,4 @@
-import * as commands from '../commands/index.js'
+import * as commands from '@commands'
 import { ClientWithCommands } from '../types/types.js';
 
 /**

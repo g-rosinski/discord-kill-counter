@@ -1,6 +1,6 @@
 import {  Interaction, SlashCommandBuilder } from 'discord.js'
-import log from '../utils/log.js'
-import { Game, GameModel } from '../models/game/index.js'
+import log from '@utils/log'
+import { Game, GameModel } from '@models'
 
 const slashCommand = new SlashCommandBuilder()
     .setName('agregar-juego')

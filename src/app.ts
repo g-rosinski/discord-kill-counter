@@ -2,7 +2,7 @@ import { Client, GatewayIntentBits, Collection } from 'discord.js';
 import {
     commandHandler,
     eventHandler
-} from './handlers/index.js'
+} from '@handlers'
 import dotenv from 'dotenv'
 import { ClientWithCommands } from './types/types.js';
 

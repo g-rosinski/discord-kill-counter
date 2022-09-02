@@ -1,6 +1,6 @@
 import { Interaction } from 'discord.js'
 import { ClientWithCommands } from '../types/types.js'
-import log from '../utils/log.js'
+import log from '@utils/log.js'
 
 const interactionCreate = (client: ClientWithCommands) => async (interaction: Interaction) => {
     try{

@@ -1,4 +1,4 @@
-import * as events from '../events/index.js'
+import * as events from '@events'
 import { ClientWithCommands } from '../types/types.js';
 
 /**

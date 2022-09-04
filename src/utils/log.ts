@@ -27,16 +27,16 @@ const logColorMap = {
     [LOG_LVL.CRITICAL]: nodeColors.magenta
 }
 
-const log = (logLvl: LOG_LVL, msg: string, params?: object) => {
+const log = (logLvl: LOG_LVL = LOG_LVL.INFO) =>  (msg: string, params?: object) => {
     const timestamp = new Date(Date.now())
     console.log(logColorMap[logLvl],`${timestamp.toLocaleString()}: ${msg}`, params || "")
 }
 
 export default {
-    debug: (msg: string, params?: object) => log(LOG_LVL.DEBUG, msg, params),
-    info: (msg: string, params?: object) => log(LOG_LVL.INFO, msg, params),
-    success: (msg: string, params?: object) => log(LOG_LVL.SUCCESS, msg, params),
-    warning: (msg: string, params?: object) => log(LOG_LVL.WARN, msg, params),
-    error: (msg: string, params?: object) => log(LOG_LVL.ERROR, msg, params),
-    critical: (msg: string, params?: object) => log(LOG_LVL.CRITICAL, msg, params),
+    debug: log(LOG_LVL.DEBUG),
+    info: log(LOG_LVL.INFO),
+    success: log(LOG_LVL.SUCCESS),
+    warning: log(LOG_LVL.WARN),
+    error: log(LOG_LVL.ERROR),
+    critical: log(LOG_LVL.CRITICAL),
 }

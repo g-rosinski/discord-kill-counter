@@ -1,1 +1,2 @@
-export * from '@models/game/index.js'
+export * from './game/index.js'
+export * from './kill/index.js'

@@ -6,6 +6,7 @@ export interface Kill {
     dead: String,
     map: String,
     season: String,
+    clip?: String,
     created?: Date,
     updated?: Date
 }

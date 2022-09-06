@@ -1,7 +1,7 @@
-import { Kill, KillModel } from "@models"
-import log from "@utils/log.js"
+import { GameModel, Kill, KillModel } from "@models"
+import log from '@utils/log/index.js'
+import { URLRegex } from "@utils/regexValidations.js"
 import { GuildMember, Interaction, SlashCommandBuilder } from "discord.js"
-import {  GameModel } from '../models/game/index.js'
 
 const slashCommand = new SlashCommandBuilder()
     .setName('kill')
@@ -16,24 +16,32 @@ const slashCommand = new SlashCommandBuilder()
         .setDescription('Usuario del damnificado')
         .setRequired(true)
     )
-    .addStringOption(option => {
-        const optionInput =  option.setName('mapa')
+    .addStringOption(input => input.setName('mapa')
             .setDescription('Mapa donde ocurrió la fechoria')
             .setRequired(true)
-            .addChoices(
-                {name: 'Mapa 1', value: 'mapa_1'},
-                {name: 'Mapa 2', value: 'mapa_2'},
-                {name: 'Mapa 3', value: 'mapa_3'},
-            )
-        return optionInput
-    })
+            .setAutocomplete(true)
+    )
+    .addStringOption(input => 
+        input.setName('clip')
+        .setDescription('Url del video clip de la muerte. Ej: https://www.twitch.tv/el_k1llah/clip/Benevo...')
+        .setRequired(false)
+    )
 
 const run = async (interaction: Interaction) =>  {
+    if(interaction.isAutocomplete()){
+        const input = interaction.options.getFocused()
+        await interaction.respond([
+            {name: "Mapa 1", value: "mapa_1"},
+            {name: "Mapa 2", value: "mapa_2"},
+            {name: "Mapa 3", value: "mapa_3"},
+        ])
+    }
     if(interaction.isChatInputCommand()){
         await interaction.deferReply()
         const killer = interaction.options.getMentionable('de')
         const dead = interaction.options.getMentionable('a')
-        
+        const clip = interaction.options.getString('clip')
+    
         const kill: Kill = {
             guildID: interaction.guild?.id!,
             killer: killer instanceof GuildMember ? killer.user.username : "",
@@ -41,6 +49,12 @@ const run = async (interaction: Interaction) =>  {
             map: interaction.options.getString('mapa')!,
             season: "temporada 3"
         }
+
+        const regex = new RegExp(URLRegex)
+        if(!!clip && clip.match(regex)){
+            kill.clip = clip
+        }
+
         try{
             await KillModel.create(kill)
             log.success(`Nueva kill registrada!`, kill)

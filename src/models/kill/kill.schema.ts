@@ -10,6 +10,10 @@ export const KillSchema = new Mongoose.Schema({
     dead: String,
     map: String,
     season: String,
+    clip: {
+        type: String,
+        default: ""
+    },
     created: {
         type: Date,
         default: new Date()

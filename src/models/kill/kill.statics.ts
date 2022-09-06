@@ -1,5 +1,5 @@
 import { connect, disconnect } from "@utils/database.js"
-import log from '@utils/log.js'
+import log from '@utils/log/index.js'
 import { Kill, KillModel, KillDocument } from "./index.js"
 
 export const createKill = async (game:Kill) => {

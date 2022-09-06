@@ -1,6 +1,6 @@
 import { DB_CONNECTION } from "@constants/db.js";
 import Mongoose from "mongoose";
-import log from "./log.js";
+import log from "./log/index";
 
 let database: Mongoose.Connection
 

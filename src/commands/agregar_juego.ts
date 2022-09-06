@@ -1,5 +1,5 @@
 import {  Interaction, SlashCommandBuilder } from 'discord.js'
-import log from '@utils/log'
+import log from '@utils/log/index.js'
 import { Game, GameModel } from '@models'
 
 const slashCommand = new SlashCommandBuilder()
@@ -35,11 +35,11 @@ const run = async (interaction: Interaction) =>  {
         }
         try{
             await GameModel.create(game)
-            log.success(`Se agrego el juego ${game.gameTitle} al guild ${game.guildID}`)
+            log.success(`Se registro un nuevo juego!`, game)
             await interaction.editReply(`Se agrego el juego: ${game.gameTitle} a ${game.guildID}`)
         }catch(error){
             const msg = error instanceof Error && error.message 
-            log.error(msg || `Error al agregar un juego ${game.gameTitle} al guild ${game.guildID}`)
+            log.error(msg || `Error al agregar un juego`, game)
         }
     }
 }

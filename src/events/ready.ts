@@ -1,4 +1,4 @@
-import log from '@utils/log.js'
+import log from '@utils/log/index.js'
 import { connect } from '@utils/database.js';
 import { ClientWithCommands } from '../types/types.js';
 

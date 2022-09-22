@@ -1,7 +1,7 @@
-import { GameModel, Kill, KillModel } from "@models"
+import { GameModel, Kill, KillModel, MapModel } from "@models"
 import log from '@utils/log/index.js'
 import { URLRegex } from "@utils/regexValidations.js"
-import { GuildMember, Interaction, SlashCommandBuilder } from "discord.js"
+import { ApplicationCommandOptionChoiceData, GuildMember, Interaction, SlashCommandBuilder } from "discord.js"
 
 const slashCommand = new SlashCommandBuilder()
     .setName('kill')
@@ -30,28 +30,32 @@ const slashCommand = new SlashCommandBuilder()
 const run = async (interaction: Interaction) =>  {
     if(interaction.isAutocomplete()){
         const input = interaction.options.getFocused()
-        await interaction.respond([
-            {name: "Mapa 1", value: "mapa_1"},
-            {name: "Mapa 2", value: "mapa_2"},
-            {name: "Mapa 3", value: "mapa_3"},
-        ])
+        let mapOptions:ApplicationCommandOptionChoiceData[] =  []
+        if(!!input.length) {
+            const mapsFound = await MapModel.findByMatch(input)
+            mapOptions = mapsFound.map(((map):ApplicationCommandOptionChoiceData => ({
+                name: map.name.toString(), 
+                value: map._id
+            })))
+        }
+        await interaction.respond(mapOptions)
     }
     if(interaction.isChatInputCommand()){
         await interaction.deferReply()
-        const killer = interaction.options.getMentionable('de')
-        const dead = interaction.options.getMentionable('a')
+        const killer = interaction.options.getMentionable('de') as GuildMember
+        const dead = interaction.options.getMentionable('a') as GuildMember
         const clip = interaction.options.getString('clip')
     
         const kill: Kill = {
             guildID: interaction.guild?.id!,
-            killer: killer instanceof GuildMember ? killer.user.username : "",
-            dead: dead instanceof GuildMember ? dead.user.username : "",
+            killer: killer.user.username,
+            dead: dead.user.username,
             map: interaction.options.getString('mapa')!,
             season: "temporada 3"
         }
 
-        const regex = new RegExp(URLRegex)
-        if(!!clip && clip.match(regex)){
+        const urlExpression = new RegExp(URLRegex)
+        if(!!clip && clip.match(urlExpression)){
             kill.clip = clip
         }
 
@@ -62,6 +66,7 @@ const run = async (interaction: Interaction) =>  {
         }catch(error){
             const msg = error instanceof Error && error.message 
             log.error(msg || `Error al registrar una kill`, kill)
+            await interaction.editReply(`Fallo al guardar la kill... o tal vez vos le fallaste`)
         }
     }
 }

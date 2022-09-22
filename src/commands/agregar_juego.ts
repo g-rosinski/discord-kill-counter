@@ -1,6 +1,8 @@
-import {  Interaction, SlashCommandBuilder } from 'discord.js'
+import {  channelMention, Interaction, SlashCommandBuilder } from 'discord.js'
 import log from '@utils/log/index.js'
 import { Game, GameModel } from '@models'
+import { stringListToArray } from '@utils/parsers'
+import { Map } from '@models/map'
 
 const slashCommand = new SlashCommandBuilder()
     .setName('agregar-juego')
@@ -23,20 +25,17 @@ const slashCommand = new SlashCommandBuilder()
 const run = async (interaction: Interaction) =>  {
     if(interaction.isChatInputCommand()){
         await interaction.deferReply()
-        const strmaps = interaction.options.getString('mapas')
-        const maps = strmaps!.split(',')
-                    .map(map => map.trim())
-                    .filter(map => (map !== ''))
+        const maps: Map[] = stringListToArray(interaction.options.getString('mapas')!).map((name):Map => ({name}))
         const game: Game = {
-            gameTitle: interaction.options.getString('juego')!,
+            title: interaction.options.getString('juego')!,
             maps: maps,
             currentSeason: interaction.options.getString('temporada') || "1",
-            guildID: interaction.guild?.id!
+            channelID: interaction.channelId
         }
         try{
-            await GameModel.create(game)
+            await GameModel.createWithMaps(game)
             log.success(`Se registro un nuevo juego!`, game)
-            await interaction.editReply(`Se agrego el juego: ${game.gameTitle} a ${game.guildID}`)
+            await interaction.editReply(`Se agrego el juego: ${game.title} al canal ${channelMention(game.channelID.toString())}`)
         }catch(error){
             const msg = error instanceof Error && error.message 
             log.error(msg || `Error al agregar un juego`, game)

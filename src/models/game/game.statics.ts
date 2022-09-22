@@ -1,17 +1,27 @@
-import { connect, disconnect } from "@utils/database.js"
-import log from '@utils/log.js'
-import { Game, GameModel, GameDocument } from "./index.js"
+import { MapModel } from '@models/map/map.model.js'
+import log from '@utils/log/index.js'
+import { GameModel, GameDocument, Game } from "./index.js"
 
-export const createGame = async (game:Game) => {
-    // try{
-    //     connect()
-    //     await GameModel.create(game)
-    //     log.success(`Se agrego el juego ${game.gameTitle} al guild ${game.guildID}`)
-    //     disconnect()
-    // }catch(error){
-    //     const msg = error instanceof Error && error.message 
-    //     log.error(msg || `Error al agregar un juego ${game.gameTitle} al guild ${game.guildID}`)
-    // }
+export const fetchChannelGames = async (channelID: string): Promise<Array<GameDocument>> => {
+    let games: Array<GameDocument> = []
+    try{
+        games = await GameModel.find({ channelID })
+    }catch(error){
+        const msg = error instanceof Error && error.message 
+        log.error(msg || `Error al hacer Games::fetchChannelGames`, {channelID})
+    }
+    return games
+}
+
+export const createWithMaps = async (game: Game): Promise<GameDocument> => {
+    try{
+        game.maps = await MapModel.create(game.maps)
+        return GameModel.create(game)
+    }catch(error){
+        const msg = error instanceof Error && error.message 
+        log.error(msg || `Error al hacer Games::createWithMaps`, game)
+        throw error
+    }
 }
 
 // export async function findOneOrCreate(id: string): Promise<GameDocument> {

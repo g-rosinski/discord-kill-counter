@@ -1,9 +1,10 @@
+import { Map, MapDocument } from "@models/map";
 import { Model, Document } from "mongoose";
 
 export interface Game {
-    guildID: String,
-    gameTitle: String,
-    maps: Array<String>,
+    channelID: String,
+    title: String,
+    maps: Array<Map> | Array<MapDocument>,
     currentSeason: String,
     created?: Date,
     updated?: Date
@@ -11,6 +12,6 @@ export interface Game {
 
 export interface GameDocument extends Game, Document {}
 export interface GameModelWithMethods extends Model<GameDocument> {
-    createGame: (game: Game) => void,
-    findOneOrCreate: (id: string) => Promise<GameDocument>
+    fetchChannelGames: (channelID: string) => Promise<Array<GameDocument>>,
+    createWithMaps: (game: Game) => void,
 }

@@ -1,3 +1,4 @@
+import { GameModel } from '@models'
 import { Interaction, SlashCommandBuilder } from 'discord.js'
 
 const slashCommand = new SlashCommandBuilder()
@@ -6,6 +7,7 @@ const slashCommand = new SlashCommandBuilder()
 
 const run = async (interaction:Interaction) => {
     if(interaction.isChatInputCommand()){
+        GameModel.fetchChannelGames(interaction.channelId!)
         await interaction.reply('Pong!')
     }
 }

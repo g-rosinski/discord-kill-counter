@@ -1,14 +1,16 @@
 import Mongoose from 'mongoose';
 import { 
-    createGame, 
-    // findOneOrCreate 
+    createWithMaps,
+    fetchChannelGames, 
 } from './game.statics.js';
 
 export const GameSchema = new Mongoose.Schema({
-
-    guildID: String,
-    gameTitle: String,
-    maps: Array<String>,
+    channelID: String,
+    title: String,
+    maps: [{ 
+        type: Mongoose.Schema.Types.ObjectId, 
+        ref: 'maps' 
+    }],
     currentSeason: String,
     created: {
         type: Date,
@@ -20,7 +22,7 @@ export const GameSchema = new Mongoose.Schema({
     }
 })
 
-GameSchema.statics.createGame = createGame
-// GameSchema.statics.findOneOrCreate = findOneOrCreate
+GameSchema.statics.fetchChannelGames = fetchChannelGames
+GameSchema.statics.createWithMaps = createWithMaps
 
 export default GameSchema
